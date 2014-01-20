@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <iostream>
+
+const int TAM_BUFFER = 255;
+
+int main(int argc, char *argv[])
+{
+	FILE *arquivo = fopen("C:\\Users\\willian.toledo\\Documents\\Codigos\\agents\\project\\asu\\doc\\whitelst.xml","r");
+	char buffer [TAM_BUFFER];
+
+	if(arquivo != NULL)
+	{
+		while(fgets(buffer,TAM_BUFFER,arquivo))
+		{
+			printf("%s\n",buffer);
+		
+		
+		
+		}
+		fclose(arquivo);
+	}
+	else
+		printf("Erro não foi possivel abrir o arquivo");
+	printf("\n\n");
+	system("pause");
+	return 0;
+}
+
+
+/***
+<blacklist>   </blacklist>
+<Whitelist>   </Whitelist>
+<CommandList> </CommandList>
+<ProfileList> </ProfileList>
+<HOSTLIST>    </HOSTLIST>
+<COMMAND Type </COMMAND>
+<Profile>     </Profile>
+***/
