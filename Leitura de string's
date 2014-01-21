@@ -1,39 +1,69 @@
-#include <stdio.h>
-#include <cstdlib>
-#include <iostream>
+#include<cstdlib>
+#include<iostream>
+#include<stdio.h>
+#include <string.h>
 
-const int TAM_BUFFER = 255;
+#define tam 255
+
+void lerArqTxt(const char *palavra) {
+
+	int i =0,cont =0;
+	char str[tam], *pos;
+
+	unsigned int valores[20];
+
+	FILE *arq;
+    arq=fopen("C:\\Users\\willian.toledo\\Documents\\Codigos\\agents\\project\\asu\\doc\\whitelst.xml","r");
+
+	if(arq)
+	{
+		while(!feof(arq))
+		{
+			fgets(str,255,arq);
+			for(pos = strstr(str,palavra);pos != NULL; pos = strstr(pos+1,palavra))
+			{
+				++cont;			
+			}			
+		}
+	}
+	fclose(arq);
+	printf( "A %s foi encontrada %d vezes\n", palavra, cont );
+}
 
 int main(int argc, char *argv[])
 {
-	FILE *arquivo = fopen("C:\\Users\\willian.toledo\\Documents\\Codigos\\agents\\project\\asu\\doc\\whitelst.xml","r");
-	char buffer [TAM_BUFFER];
 
-	if(arquivo != NULL)
+	std::string comandosXML[20];
+	unsigned int listaComandos=0;
+
+
+	comandosXML[0] = "<whitelist>";
+	comandosXML[1] = "</whitelist>";
+	comandosXML[2] = "<CommandList>";
+	comandosXML[3] = "</CommandList>";
+	comandosXML[4] = "<ProfileList>";
+	comandosXML[5] = "</ProfileList>";
+	comandosXML[6] = "<HOSTLIST>";
+	comandosXML[7] = "</HOSTLIST>";
+	comandosXML[8] = "<COMMAND Type";
+	comandosXML[9] = "<COMMAND>";
+	comandosXML[10] = "</COMMAND>";
+	comandosXML[11] = "<Profile>";
+	comandosXML[12] = "</Profile>";
+	comandosXML[13] = "<HOST>";
+	comandosXML[14] = "</HOST>";
+
+
+
+			
+   
+	while(listaComandos!= 15)
 	{
-		while(fgets(buffer,TAM_BUFFER,arquivo))
-		{
-			printf("%s\n",buffer);
-		
-		
-		
-		}
-		fclose(arquivo);
+		lerArqTxt(comandosXML[listaComandos].c_str());
+		++listaComandos;
 	}
-	else
-		printf("Erro não foi possivel abrir o arquivo");
-	printf("\n\n");
-	system("pause");
-	return 0;
+ 
+      system("PAUSE");
+      return EXIT_SUCCESS;
+
 }
-
-
-/***
-<blacklist>   </blacklist>
-<Whitelist>   </Whitelist>
-<CommandList> </CommandList>
-<ProfileList> </ProfileList>
-<HOSTLIST>    </HOSTLIST>
-<COMMAND Type </COMMAND>
-<Profile>     </Profile>
-***/
