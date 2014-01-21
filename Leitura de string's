@@ -4,13 +4,13 @@
 #include <string.h>
 
 #define tam 255
+unsigned int valores[20];
 
-void lerArqTxt(const char *palavra) {
+int lerArqTxt(const char *palavra) {
 
 	int i =0,cont =0;
 	char str[tam], *pos;
-
-	unsigned int valores[20];
+	
 
 	FILE *arq;
     arq=fopen("C:\\Users\\willian.toledo\\Documents\\Codigos\\agents\\project\\asu\\doc\\whitelst.xml","r");
@@ -27,14 +27,21 @@ void lerArqTxt(const char *palavra) {
 		}
 	}
 	fclose(arq);
-	printf( "A %s foi encontrada %d vezes\n", palavra, cont );
+	//printf( "A %s foi encontrada %d vezes\n", palavra, cont );
+	
+	return cont;
 }
+
+
+
+
 
 int main(int argc, char *argv[])
 {
 
 	std::string comandosXML[20];
 	unsigned int listaComandos=0;
+	
 
 
 	comandosXML[0] = "<whitelist>";
@@ -52,18 +59,18 @@ int main(int argc, char *argv[])
 	comandosXML[12] = "</Profile>";
 	comandosXML[13] = "<HOST>";
 	comandosXML[14] = "</HOST>";
-
-
-
-			
-   
+	
+	int caso = 0;
+	int testScore[15];
+	
 	while(listaComandos!= 15)
 	{
-		lerArqTxt(comandosXML[listaComandos].c_str());
+		caso = lerArqTxt(comandosXML[listaComandos].c_str());
+		testScore[listaComandos] = caso;
+		printf("Valor %d caso %d\n",listaComandos,testScore[listaComandos]);
+		
 		++listaComandos;
 	}
- 
       system("PAUSE");
       return EXIT_SUCCESS;
-
 }
