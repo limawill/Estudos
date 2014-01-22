@@ -1,0 +1,128 @@
+#include <cstdlib>
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+#include <vector>
+#include <regex>
+#include <C:\Users\willian.toledo\Desktop\pugixml-master\src\pugixml.hpp>
+
+#define tam 255
+
+unsigned int valores[20];
+std::vector<std::string> V;
+
+
+void PegaSoftware(const char *Nome)
+{
+	
+	char str[tam], *pos;
+
+	FILE *arq;
+    arq=fopen("C:\\Users\\willian.toledo\\Documents\\Codigos\\agents\\project\\asu\\doc\\whitelst.xml","r");
+
+	if(arq)
+	{
+		while(!feof(arq))
+		{
+			fgets(str,255,arq);
+            for(pos = strstr(str,Nome);pos != NULL; pos = strstr(pos+1,Nome))
+            {
+              V.push_back(str);
+            }                        
+         }
+        
+    fclose(arq);
+	}
+}
+
+
+int lerArqTxt(const char *palavra) 
+{
+	int i =0,cont =0;
+    char str[tam], *pos;
+    
+	FILE *arq;
+    arq=fopen("C:\\Users\\willian.toledo\\Documents\\Codigos\\agents\\project\\asu\\doc\\whitelst.xml","r");
+
+		if(arq)
+        {
+                while(!feof(arq))
+                {
+                        fgets(str,255,arq);
+                        for(pos = strstr(str,palavra);pos != NULL; pos = strstr(pos+1,palavra))
+                        {
+                                ++cont;                        
+                        }                        
+                }
+        }
+        fclose(arq);
+        return cont;
+}
+
+
+
+
+
+int main(int argc, char *argv[])
+{
+
+	std::string comandosXML[20];
+	unsigned int listaComandos=0;
+	int caso = 0;
+	int testScore[15];
+
+
+	comandosXML[0] = "<whitelist>";
+	comandosXML[1] = "</whitelist>";
+	comandosXML[2] = "<CommandList>";
+	comandosXML[3] = "</CommandList>";
+	comandosXML[4] = "<ProfileList>";
+	comandosXML[5] = "</ProfileList>";
+	comandosXML[6] = "<HOSTLIST>";
+	comandosXML[7] = "</HOSTLIST>";
+	comandosXML[8] = "<COMMAND Type";
+	comandosXML[9] = "<COMMAND>";
+	comandosXML[10] = "</COMMAND>";
+	comandosXML[11] = "<Profile>";
+	comandosXML[12] = "</Profile>";
+	comandosXML[13] = "<HOST>";
+	comandosXML[14] = "</HOST>";
+
+
+	while(listaComandos!= 15)
+	{
+        caso = lerArqTxt(comandosXML[listaComandos].c_str());
+        testScore[listaComandos] = caso;
+        ++listaComandos;
+	}
+
+	PegaSoftware("COMMAND Type");
+
+	if(testScore[0] != testScore[1])
+		printf("Erro comando WhiteList !\n");
+
+	else if(testScore[2] != testScore[3])
+		printf("Erro comando CommandList !\n");
+
+	else if(testScore[4] != testScore[5])
+		printf("Erro comando ProfileList !\n");
+
+	else if(testScore[6] != testScore[7])
+		printf("Erro comando HOSTLIST !\n");
+
+	else if((testScore[8]+testScore[9]) != testScore[10])
+		printf("Erro comando COMMAND !\n");
+
+	else if(testScore[11] != testScore[12])
+		printf("Erro comando HOST !\n");
+
+	else
+		printf("Comandos Corretos !\n");
+	
+	
+	
+
+	
+	system("PAUSE");
+	return EXIT_SUCCESS;
+}
