@@ -29,8 +29,7 @@ main()
 		}
 		
 	}
-			printf("%d\n",numProcesso);	
-			printf("Total de Processador: %d\n", myset.size());
+	printf("Total de Processador: %d\n", myset.size());
 	
 	fclose(fp);
 }
