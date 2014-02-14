@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <set>
+
+
+
+void main()
+{
+	FILE *fp;
+	char buf[256];
+	int numProcesso = 0;
+	std::set<int> myset;
+	
+	fp = fopen("/proc/cpuinfo","r");
+	if(fp == NULL)
+	{
+		printf("Erro ao Abrir!");
+	}
+	
+	while(fgets(buf, sizeof(buf),fp))
+	{
+		if(strncmp(buf,"physical id",sizeof("physical id")-1) == 0)
+		{
+			char* texto = strchr(buf, ':') +1;
+			numProcesso = atoi(texto);
+			myset.insert(numProcesso);	
+			
+		}
+		
+	}
+			printf("%d\n",numProcesso);	
+			printf("Total de Processador: %d\n", myset.size());
+	
+	fclose(fp);
+}
